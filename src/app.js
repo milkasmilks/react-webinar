@@ -1,39 +1,38 @@
-import React from 'react';
-import './style.css';
+import React, {useCallback, useState} from 'react';
+import Controls from "./components/controls";
+import List from "./components/list";
+import Layout from "./components/layout";
+import Popup from "./components/popup";
 
 /**
  * Приложение
  * @param store {Store} Состояние с действиями
  */
-function App({ store }) {
+function App({store}) {
+  const [cartAmount, setCartAmount] = useState(0);
+  const [cartSum, setCartSum] = useState(0);
+
+  const callbacks = {
+    onAddItem: useCallback((item) => store.addItem(item), [store]),
+    onUpdateCartAmount: useCallback(() => {
+      setCartAmount(cartAmount + 1);
+    }, [cartAmount, setCartAmount]),
+    onUpdateCartSum: useCallback((item) => {
+      setCartSum(cartSum + item.price);
+    }, [cartSum, setCartSum])
+  };
+
+
   return (
-    <div className='App'>
-      <div className='App__head'>
-        <h1>Приложение на чистом JS</h1>
-      </div>
-      <div className='Controls'>
-        <button onClick={() => store.createItem()}> Добавить</button>
-      </div>
-      <div className='App__center'>
-        <div className='List'>{store.getState().items.map(item =>
-          <div
-            key={item.code}
-            className={'List__item' + (item.selected ? ' List__item_selected' : '')}
-          >
-            <div className='Item' onClick={() => store.selectItem(item.code)}>
-              <div className='Item__number'>{item.code}</div>
-              <div className='Item__title'>{item.title + (item.counter > 0 ? ' | Выделялся ' + item.counter + ' раз' : '')}</div>
-              <div className='Item__actions'>
-                <button onClick={() => store.deleteItem(item.code)}>
-                  Удалить
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        </div>
-      </div>
-    </div>
+    <Layout head={<h1>Магазин</h1>}>
+      <Controls cartSum={cartSum} cartAmount={cartAmount}/>
+      <List items={store.getState().items}
+            onAddItem={callbacks.onAddItem}
+            onUpdateCartSum={callbacks.onUpdateCartSum}
+            onUpdateCartAmount={callbacks.onUpdateCartAmount}
+      />
+      <Popup cartItems={store.getState().cartItems} cartAmount={cartAmount} cartSum={cartSum}/>
+    </Layout>
   );
 }
 
