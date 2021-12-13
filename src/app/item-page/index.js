@@ -20,15 +20,15 @@ function ItemPage() {
     error: state.item.error
   }));
 
+  const store = useStore();
+
   useEffect(async () => {
     await store.item.load(itemId);
     setLoading(false);
-  }, []);
-
-  const store = useStore();
+  }, [itemId]);
 
   const callbacks = {
-    addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
+    addToBasket: useCallback((item) => store.basket.add(item), [store]),
     openModal: useCallback(() => store.modals.open('basket'), [store]),
   }
 

@@ -10,30 +10,31 @@ class BasketStore extends StoreModule {
       items: [],
       sum: 0,
       amount: 0,
+      unicAmount: 0,
     };
   }
 
   /**
-   * Добавление товара в корзину по коду
+   * Добавление товара в корзину
    * @param id {*}
    */
-  add(id){
+  add(item){
+    let unicAmount = this.getState().unicAmount;
     // Ищем товар в корзие, чтобы увеличить его количество.
     let exists = false;
-    const items = this.getState().items.map(item => {
+    const items = this.getState().items.map(i => {
       // Искомый товар
-      if (item._id === id) {
+      if (i._id === item._id) {
         exists = true;
-        return {...item, amount: item.amount + 1};
+        return {...i, amount: i.amount + 1};
       }
-      return item
+      return i
     });
 
     if (!exists) {
       // Если товар не был найден в корзине, то добавляем его из каталога
-      // Поиск товара в каталоге, чтобы его в корзину добавить
-      const item = this.store.getState().catalog.items.find(item => item._id === id);
-      items.push({...item, amount: 1});
+      items.push({...item, amount: 1, basketIndex: unicAmount + 1});
+      unicAmount++;
     }
 
     // Считаем суммы
@@ -44,11 +45,13 @@ class BasketStore extends StoreModule {
       sum += item.price * item.amount;
     }
 
+
     // Установка состояние basket
     this.setState({
       items,
       amount,
-      sum
+      sum,
+      unicAmount
     });
   }
 

@@ -12,7 +12,7 @@ function Item({item, onAdd}) {
       <Link to={'/items/' + item._id} className='Item__title'>{item.title}</Link>
       <div className='Item__right'>
         <div className='Item__price'>{numberFormat(item.price)} ₽</div>
-        <button onClick={() => onAdd(item._id)}>Добавить</button>
+        <button onClick={() => onAdd(item)}>Добавить</button>
       </div>
     </div>
   )

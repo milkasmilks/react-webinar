@@ -13,7 +13,7 @@ function ItemInfo({item, onAdd}) {
       <div className='ItemInfo__edition'>Год выпуска: <span>{item.edition}</span></div>
       <div className='ItemInfo__price'>Цена: <span>{numberFormat(item.price)} ₽</span></div>
 
-      <button onClick={() => onAdd(item._id)}>Добавить</button>
+      <button onClick={() => onAdd(item)}>Добавить</button>
     </div>
   )
 }

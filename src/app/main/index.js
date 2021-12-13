@@ -26,14 +26,14 @@ function Main() {
   const store = useStore();
 
   const callbacks = {
-    addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
+    addToBasket: useCallback((item) => store.basket.add(item), [store]),
     openModal: useCallback(() => store.modals.open('basket'), [store]),
     changePage: useCallback((page) => store.catalog.load(page), [store]),
   }
 
   const renders = {
     item: useCallback(item => {
-      return <Item item={item} onAdd={callbacks.addToBasket}/>
+      return <Item item={item} onAdd={callbacks.addToBasket} />
     }, [callbacks.addToBasket]),
   }
 
@@ -43,7 +43,7 @@ function Main() {
       {select.error ||
       <>
         <List items={select.items} renderItem={renders.item}/>
-        <Pagination onChange={callbacks.changePage} pagesArray={select.pagesArray} currentPage = {select.page}/>
+        <Pagination onChange={callbacks.changePage} pagesArray={select.pagesArray} currentPage={select.page}/>
       </>
       }
     </Layout>

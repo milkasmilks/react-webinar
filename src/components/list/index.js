@@ -5,7 +5,7 @@ import './styles.css';
 function List({items, renderItem}) {
   return (
     <div className='List'>
-      {items.map(item =>
+      {items.map((item) =>
         <div key={item._id} className='List__item'>
           {renderItem(item)}
         </div>

@@ -11,7 +11,8 @@ function Basket(){
   const select = useSelector(state => ({
     items: state.basket.items,
     sum: state.basket.sum,
-    amount: state.basket.amount
+    amount: state.basket.amount,
+		unicAmount: state.basket.unicAmount
   }));
 
   const store = useStore();
