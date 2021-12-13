@@ -1,31 +1,29 @@
-import React from "react";
+import React from 'react';
 import propTypes from 'prop-types';
-import Item from "../item";
 import './styles.css';
 
-function List({items, onAddItem, onUpdateCartSum, onUpdateCartAmount}){
+function List({items, renderItem}) {
   return (
-    <div className='List'>{items.map(item =>
-      <div className='List__item' key={item.code}>
-        <Item item={item} onAdd={onAddItem} onUpdateCartSum={onUpdateCartSum} onUpdateCartAmount={onUpdateCartAmount}/>
-      </div>
-    )}
+    <div className='List'>
+      {items.map(item =>
+        <div key={item._id} className='List__item'>
+          {renderItem(item)}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
 List.propTypes = {
   items: propTypes.arrayOf(propTypes.object).isRequired,
-  onAddItem: propTypes.func,
-  onUpdateCartSum: propTypes.func,
-  onUpdateCartAmount: propTypes.func
+  renderItem: propTypes.func
 }
 
 List.defaultProps = {
   items: [],
-  onAddItem: () => {},
-  onUpdateCartSum: () => {},
-  onUpdateCartAmount: () => {}
+  renderItem: (item) => {
+    return item.toString()
+  }
 }
 
 export default React.memo(List);

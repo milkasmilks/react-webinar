@@ -1,26 +1,18 @@
-import React from "react";
+import React from 'react';
 import propTypes from 'prop-types';
 import './styles.css';
+import numberFormat from "../../utils/number-format";
+import { Link } from 'react-router-dom';
 
-function Item({item, onAdd, onUpdateCartSum, onUpdateCartAmount}){
+
+function Item({item, onAdd}) {
   return (
-    <div className={'Item'}>
-      <div className='Item__number'>{item.code}</div>
-      <div className='Item__row'>
-        <div className='Item__title'>
-          {item.title}
-        </div>
-        <div className='Item__price'>
-          {item.price.toLocaleString() + ' ₽'}
-        </div>
-      </div>
-      <div className='Item__actions'>
-        <button onClick={() => {
-          onAdd(item);
-          onUpdateCartSum(item);
-          onUpdateCartAmount()}}>
-          Добавить
-        </button>
+    <div className='Item'>
+      <div className='Item__number'>{item._key}</div>
+      <Link to={'/items/' + item._id} className='Item__title'>{item.title}</Link>
+      <div className='Item__right'>
+        <div className='Item__price'>{numberFormat(item.price)} ₽</div>
+        <button onClick={() => onAdd(item._id)}>Добавить</button>
       </div>
     </div>
   )
@@ -28,15 +20,11 @@ function Item({item, onAdd, onUpdateCartSum, onUpdateCartAmount}){
 
 Item.propTypes = {
   item: propTypes.object.isRequired,
-  onAdd: propTypes.func.isRequired,
-  onUpdateCartSum: propTypes.func,
-  onUpdateCartAmount: propTypes.func
+  onAdd: propTypes.func,
 }
 
 Item.defaultProps = {
-  onAdd: () => {},
-  onUpdateCartSum: () => {},
-  onUpdateCartAmount: () => {}
+  onAdd: () => {}
 }
 
 export default React.memo(Item);

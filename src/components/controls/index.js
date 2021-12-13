@@ -1,20 +1,20 @@
 import React from "react";
-import plural from 'plural-ru';
+import propTypes from 'prop-types';
 import './styles.css';
 
-function Controls({cartSum, cartAmount}){
 
-  return (
-    <div className='Controls'>
-      <div className='Controls__cart'>
-        <span>В корзине:</span>
-        <div className='Controls__total'>
-          {cartAmount ? cartAmount + plural(cartAmount, ' товар', ' товара', ' товаров') + ' / ' + cartSum.toLocaleString() + ' ₽' : 'пусто'}
-        </div>
-      </div>
-      <a href="#popup" className='Controls__open'>Перейти</a>
-    </div>
-  )
+function Controls({onCreate}){
+  return <div className='Controls'>
+    <button onClick={onCreate}> Добавить</button>
+  </div>
+}
+
+Controls.propTypes = {
+  onCreate: propTypes.func.isRequired
+}
+
+Controls.defaultProps = {
+  onCreate: () => {}
 }
 
 export default React.memo(Controls);
