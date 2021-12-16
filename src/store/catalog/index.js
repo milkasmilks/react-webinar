@@ -1,5 +1,4 @@
 import axios from "axios";
-import getPagesArray from "../../utils/get-pages-array";
 import StoreModule from "../module";
 
 class CatalogStore extends StoreModule {
@@ -11,7 +10,7 @@ class CatalogStore extends StoreModule {
     return {
       items: [],
       totalCount: 0,
-      pagesArray: [],
+      limit: 10,
       page: 1,
       error: ''
     };
@@ -20,33 +19,21 @@ class CatalogStore extends StoreModule {
   /**
    * Загрузка списка товаров
    */
-  async preload() {
+  async load(page = 1){
     try {
-      const response = await axios.get(`/api/v1/articles?limit=10&skip=0&fields=items(*),count`);
+      const skip = this.getState().limit * (page - 1);
+      let url = `/api/v1/articles?limit=${this.getState().limit}&skip=${skip}`;
+      
+      if (this.getState().totalCount == 0) {
+        url += '&fields=items(*),count';
+      }
+
+      const response = await axios.get(url);
       
       this.setState({
         ...this.getState(),
         items: response.data.result.items,
-        totalCount: response.data.result.count,
-        pagesArray: getPagesArray(response.data.result.count, 10),
-        page: 1
-      });
-    } catch(e) {
-      this.setState({
-        error: 'Товары не найдены'
-      });
-    }
-  }
-
-  async load(page = 1, limit = 10){
-    try {
-      const skip = limit * (page - 1);
-
-      const response = await axios.get(`/api/v1/articles?limit=${limit}&skip=${skip}`);
-      
-      this.setState({
-        ...this.getState(),
-        items: response.data.result.items,
+        totalCount: this.getState().totalCount || response.data.result.count,
         page: page
       });
     } catch (e) {

@@ -11,7 +11,8 @@ function Main() {
 
   const select = useSelector(state => ({
     items: state.catalog.items,
-    pagesArray: state.catalog.pagesArray,
+    totalCount: state.catalog.totalCount,
+    limit: state.catalog.limit,
     page: state.catalog.page,
     amount: state.basket.amount,
     sum: state.basket.sum,
@@ -20,7 +21,7 @@ function Main() {
 
   // Загрузка тестовых данных при первом рендере
   useEffect(async () => {
-    await store.catalog.preload();
+    await store.catalog.load();
   }, []);
 
   const store = useStore();
@@ -43,7 +44,7 @@ function Main() {
       {select.error ||
       <>
         <List items={select.items} renderItem={renders.item}/>
-        <Pagination onChange={callbacks.changePage} pagesArray={select.pagesArray} currentPage={select.page}/>
+        <Pagination onChange={callbacks.changePage} limit={select.limit} totalCount={select.totalCount} currentPage={select.page}/>
       </>
       }
     </Layout>

@@ -11,13 +11,12 @@ function ItemPage() {
 
   const itemId = useParams().id;
 
-  const [loading, setLoading] = useState(true);
-
   const select = useSelector(state => ({
     item: state.item.result,
     amount: state.basket.amount,
     sum: state.basket.sum,
-    error: state.item.error
+    error: state.item.error,
+    loading: state.item.loading
   }));
 
   const store = useStore();
@@ -34,9 +33,9 @@ function ItemPage() {
 
 
   return (
-    <Layout head={<h1>{(select.error || loading) ? '' : select.item.title}</h1>}>
+    <Layout head={<h1>{(select.error || select.loading) ? '' : select.item.title}</h1>}>
       <BasketSimple onOpen={callbacks.openModal} amount={select.amount} sum={select.sum}/>
-      {loading 
+      {select.loading 
       ? <ThreeDots/> 
       : 
       (select.error || <ItemInfo item={select.item} onAdd={callbacks.addToBasket}/>)}

@@ -1,8 +1,11 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import getPagesArray from "../../utils/get-pages-array";
 import './styles.css';
 
-function Pagination({onChange, pagesArray, currentPage}) {
+function Pagination({onChange, limit, totalCount, currentPage}) {
+	const pagesArray = getPagesArray(totalCount, limit);
+	
   return (
     <div className='Pagination'>
       {pagesArray.map(page => 

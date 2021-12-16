@@ -15,7 +15,8 @@ class ItemStore extends StoreModule {
         category: '',
         edition: '',
         price: 0,
-      }, 
+      },
+      loading: false,
       error: ''
     };
   }
@@ -23,6 +24,10 @@ class ItemStore extends StoreModule {
   // /**
   async load(id){
     try {
+      this.setState({
+        ...this.getState(),
+        loading: true
+      });
       const response = await axios.get(`/api/v1/articles/${id}`);
       const dataResult = response.data.result;
 
@@ -38,11 +43,13 @@ class ItemStore extends StoreModule {
           category: category.data.result.title,
           edition: dataResult.edition,
           price: dataResult.price
-        }
+        },
+        loading: false
       });
     } catch(e) {
       this.setState({
-        error: 'Товар не найден'
+        error: 'Товар не найден',
+        loading: false
       });
     }
   }
