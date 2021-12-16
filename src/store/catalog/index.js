@@ -10,7 +10,7 @@ class CatalogStore extends StoreModule {
     return {
       items: [],
       totalCount: 0,
-      limit: 10,
+      limit: 0,
       page: 1,
       error: ''
     };
@@ -19,10 +19,10 @@ class CatalogStore extends StoreModule {
   /**
    * Загрузка списка товаров
    */
-  async load(page = 1){
+  async load(page = 1, limit = 10){
     try {
-      const skip = this.getState().limit * (page - 1);
-      let url = `/api/v1/articles?limit=${this.getState().limit}&skip=${skip}`;
+      const skip = limit * (page - 1);
+      let url = `/api/v1/articles?limit=${limit}&skip=${skip}`;
       
       if (this.getState().totalCount == 0) {
         url += '&fields=items(*),count';
@@ -34,6 +34,7 @@ class CatalogStore extends StoreModule {
         ...this.getState(),
         items: response.data.result.items,
         totalCount: this.getState().totalCount || response.data.result.count,
+        limit: limit,
         page: page
       });
     } catch (e) {
