@@ -4,8 +4,8 @@ import getPagesArray from "../../utils/get-pages-array";
 import './styles.css';
 
 function Pagination({onChange, limit, totalCount, currentPage}) {
-	const pagesArray = getPagesArray(totalCount, limit);
-	
+  const pagesArray = getPagesArray(totalCount, limit);
+  
   return (
     <div className='Pagination'>
       {pagesArray.map(page => 
@@ -17,13 +17,15 @@ function Pagination({onChange, limit, totalCount, currentPage}) {
 
 Pagination.propTypes = {
   onChange: propTypes.func.isRequired,
-  pageCount: propTypes.number,
+  limit: propTypes.number,
+  totalCount: propTypes.number,
   currentPage: propTypes.number
 }
 
 Pagination.defaultProps = {
   onChange: () => {},
-  pageCount: 0,
+  limit: 0,
+  totalCount: 0,
   currentPage: 0
 }
 
