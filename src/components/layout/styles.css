@@ -22,7 +22,3 @@ body{
     margin: 0;
     padding: 20px 20px 10px;
 }
-
-html::-webkit-scrollbar {
-    width: 0;
-}

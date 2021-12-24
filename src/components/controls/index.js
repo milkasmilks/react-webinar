@@ -2,7 +2,6 @@ import React from "react";
 import propTypes from 'prop-types';
 import './styles.css';
 
-
 function Controls({onCreate}){
   return <div className='Controls'>
     <button onClick={onCreate}> Добавить</button>

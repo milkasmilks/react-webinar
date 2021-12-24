@@ -1,0 +1,17 @@
+.FormEdit {
+    padding: 20px 35px 0px 35px;
+}
+
+.FormEdit__row {
+    display: flex;
+}
+
+.FormEdit__error {
+    padding: 0px 0px 0px 20px;
+    color: red;
+}
+
+.FormEdit__delete {
+    margin: 10px 0px 20px 35px;
+    width: 82px;
+}

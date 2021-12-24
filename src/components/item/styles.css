@@ -14,15 +14,10 @@
 }
 
 .Item__title {
-    color: #000;
-    text-decoration: none;
     width: 100%;
     padding: 20px 10px;
 }
 
-.Item__title:hover {
-  text-decoration: underline;
-}
 .Item__right {
     padding: 20px 20px 20px 10px;
     display: flex;

@@ -15,7 +15,6 @@ let config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-		publicPath: process.env.NODE_ENV === 'development' ? 'http://localhost:8010/' : '',
     // Очистить ./dist от предыдущей сборки
     clean: true,
   },
@@ -26,7 +25,7 @@ let config = {
     new HtmlWebPackPlugin({
       template: './index.html',
       filename: './index.html',
-      base: '',
+      base: '/',
     }),
   ],
   //

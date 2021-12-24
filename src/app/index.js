@@ -1,9 +1,10 @@
 import React from 'react';
+import {Routes, Route} from "react-router-dom";
 import Main from "./main";
 import Basket from "./basket";
-import ItemPage from './item-page';
 import useSelector from "../utils/use-selector";
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Article from "./article";
+import ArticleEdit from './article-edit';
 
 /**
  * Приложение
@@ -16,14 +17,12 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/items' element={<Main/>}/>
-          <Route path='/items/:id' element={<ItemPage/>}/>
-          <Route path='*' element={<Navigate to="/items" />}/>
-        </Routes>
-        {select.name === 'basket' && <Basket/>}
-      </BrowserRouter>
+      <Routes>
+        <Route path={''} element={<Main/>}/>
+        <Route path={"/articles/:id"} element={<Article/>}/>
+        <Route path={"/articles/:id/edit"} element={<ArticleEdit/>}/>
+      </Routes>
+      {select.name === 'basket' && <Basket/>}
     </>
   );
 }
