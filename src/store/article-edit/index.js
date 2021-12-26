@@ -54,10 +54,10 @@ class ArticleEditStore extends StoreModule {
     }
   }
 
-  update(event){
+  update(name, value){
     const newFields = {
       ...this.getState().fields,
-      [event.currentTarget.name] : event.currentTarget.value
+      [name] : value
     }
     this.updateState({
       fields: newFields,

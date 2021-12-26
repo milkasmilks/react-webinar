@@ -34,7 +34,7 @@ function ArticleEdit() {
   
 
   const callbacks = {
-    onChange: useCallback(event => store.articleEdit.update(event), [store]),
+    onChange: useCallback((name, value) => store.articleEdit.update(name, value), [store]),
     onSubmit: useCallback(event => store.articleEdit.submit(event), [store]),
     onDelete: useCallback(() => store.articleEdit.delete(), [store])
   }

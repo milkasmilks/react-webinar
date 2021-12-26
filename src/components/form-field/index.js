@@ -7,10 +7,8 @@ import {cn} from '@bem-react/classname'
 
 function FormField({label, input, theme}){
 
-  const className = cn('FormField');
-
   return (
-    <div className={className({theme: theme})}>
+    <div className="FormField">
       <div className="FormField__label">{label}</div>
       <div className="FormField__input">{input}</div>
     </div>
@@ -19,7 +17,7 @@ function FormField({label, input, theme}){
 
 FormField.propTypes = {
   label: propTypes.string,
-  input: propTypes.object,
+  input: propTypes.node,
   theme: propTypes.string
 }
 
